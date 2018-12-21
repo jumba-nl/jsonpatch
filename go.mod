@@ -1,4 +1,4 @@
-module github.com/appscode/jsonpatch
+module github.com/jumba-nl/jsonpatch
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

@@ -309,7 +309,13 @@ func min(x int, y int) int {
 	return x
 }
 
-func backtrace(s, t []interface{}, p string, i int, j int, matrix [][]int) []Operation {
+func backtrace(s, t []interface{}, p string, i int, j int, matrix [][]int) (ops []Operation) {
+	defer func() {
+		if recover() != nil {
+			ops = []Operation{}
+		}
+	}()
+
 	if i > 0 && matrix[i-1][j]+1 == matrix[i][j] {
 		op := NewPatch("remove", makePath(p, i-1), nil)
 		return append([]Operation{op}, backtrace(s, t, p, i-1, j, matrix)...)
@@ -324,10 +330,8 @@ func backtrace(s, t []interface{}, p string, i int, j int, matrix [][]int) []Ope
 			return append([]Operation{op}, backtrace(s, t, p, i-1, j-1, matrix)...)
 		}
 
-		if j-1 > 0 && len(s) != j-1 && len(t) != j-1 {
-			p2, _ := handleValues(s[j-1], t[j-1], makePath(p, i-1), []Operation{})
-			return append(p2, backtrace(s, t, p, i-1, j-1, matrix)...)
-		}
+		p2, _ := handleValues(s[j-1], t[j-1], makePath(p, i-1), []Operation{})
+		return append(p2, backtrace(s, t, p, i-1, j-1, matrix)...)
 	}
 	if i > 0 && j > 0 && matrix[i-1][j-1] == matrix[i][j] {
 		return backtrace(s, t, p, i-1, j-1, matrix)

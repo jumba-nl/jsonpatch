@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/appscode/jsonpatch"
+	"github.com/jumba-nl/jsonpatch"
 	jp "github.com/evanphx/json-patch"
 	"github.com/stretchr/testify/assert"
 )

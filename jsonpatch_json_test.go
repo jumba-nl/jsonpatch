@@ -3,7 +3,7 @@ package jsonpatch_test
 import (
 	"testing"
 
-	"github.com/appscode/jsonpatch"
+	"github.com/jumba-nl/jsonpatch"
 	"github.com/stretchr/testify/assert"
 )
 
